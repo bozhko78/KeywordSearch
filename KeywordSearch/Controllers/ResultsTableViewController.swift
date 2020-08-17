@@ -2,7 +2,7 @@
 //  ResultsTableViewController.swift
 //  KeywordSearch
 //
-//  Created by Bozhko Terziev on 15.08.20.
+//  Created by Bozhko Terziev on 16.08.20.
 //  Copyright © 2020 Softavail. All rights reserved.
 //
 

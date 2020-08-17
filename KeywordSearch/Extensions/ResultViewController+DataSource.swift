@@ -46,53 +46,55 @@ extension ResultsTableViewController {
         let limit = limitBySelectedScope(index: selectedScope)
         
         token?.cancel()
-        let url = URL(string:
-            "https://search.outdoorsy.co/rentals?address=Austin+Texas+United+States&filter[keywords]=\(searchText)&page[limit]=\(limit)&page[offset]=0")!
-            token = URLSession.shared.dataTaskPublisher(for: url)
-            //.receive(on: RunLoop.main)
-            .sink(receiveCompletion: { (completion) in
-                switch completion {
-                case .finished:
-                    break
-                case .failure(let error):
-                    print(error.localizedDescription)
-                    DispatchQueue.main.async {
-                        self.dataSource.removeAll()
-                        self.tableView.reloadData()
-                        self.searchController.searchBar.isLoading = false
-                    }
-                }
-            }) { (result: SearchResult) in
-                var tempDataSource = [CellModel]()
-                result.data.forEach({
-                    let imageId = $0.relationships.primary_image.data.id
-                    let title = $0.attributes.name
-                                        
-                    let extra = result.included.first { (elem) -> Bool in
-                        return elem.id == imageId
-                    }
-                    
-                    let urlString = extra?.attributes.url
-                    
-                    let model = CellModel()
-                    model.title = title
-                    model.urlString = urlString
-                    if let imageFromCache = imageCache.object(forKey: urlString as AnyObject) {
-                        model.img = imageFromCache as? UIImage
-                    }
-                    
-                    tempDataSource.append(model)
-                })
+        let originalString = "https://search.outdoorsy.co/rentals?address=Austin+Texas+United+States&filter[keywords]=\(searchText)&page[limit]=\(limit)&page[offset]=0"
+        let urlString = originalString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+        guard let urlStr = urlString, let url = URL(string:urlStr) else {
+            self.searchController.searchBar.isLoading = false
+            return
+        }
                 
+        token = URLSession.shared.dataTaskPublisher(for: url)
+            //.receive(on: RunLoop.main)
+        .sink(receiveCompletion: { (completion) in
+        switch completion {
+            case .finished:
+                break
+            case .failure(let error):
+                print(error.localizedDescription)
                 DispatchQueue.main.async {
-//                    self.mergeDataSourceWith(newElements:tempDataSource)
-//                    self.removeUnexistingItemsFor(newElements:tempDataSource)
-                    
-                    self.dataSource = tempDataSource
-                                        
+                    self.dataSource.removeAll()
                     self.tableView.reloadData()
                     self.searchController.searchBar.isLoading = false
                 }
             }
+        }) { (result: SearchResult) in
+            var tempDataSource = [CellModel]()
+            result.data.forEach({
+                let imageId = $0.relationships.primary_image.data.id
+                let title = $0.attributes.name
+                                    
+                let extra = result.included.first { (elem) -> Bool in
+                    return elem.id == imageId
+                }
+                
+                let urlString = extra?.attributes.url
+                
+                let model = CellModel()
+                model.title = title
+                model.urlString = urlString
+                if let imageFromCache = imageCache.object(forKey: urlString as AnyObject) {
+                    model.img = imageFromCache as? UIImage
+                }
+                
+                tempDataSource.append(model)
+            })
+            
+            DispatchQueue.main.async {
+                self.dataSource = tempDataSource
+                                    
+                self.tableView.reloadData()
+                self.searchController.searchBar.isLoading = false
+            }
+        }
     }
 }

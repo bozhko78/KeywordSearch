@@ -11,6 +11,8 @@ import UIKit
 extension ResultsTableViewController: UISearchResultsUpdating {
   func updateSearchResults(for searchController: UISearchController) {
         let searchBar = searchController.searchBar
-        filterContentForSearchText(searchBar.text!, selectedScope: searchBar.selectedScopeButtonIndex)
+        if let searchText = searchBar.text {
+            filterContentForSearchText(searchText, selectedScope: searchBar.selectedScopeButtonIndex)
+        }
     }
 }
