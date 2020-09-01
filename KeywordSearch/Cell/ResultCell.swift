@@ -27,6 +27,9 @@ class ResultCell: UITableViewCell, CellModelDelegate {
         titleImageView.image = nil
         self.contentView.bringSubviewToFront(activityIndicator)
         activityIndicator.startAnimating()
+        activityIndicator.backgroundColor = titleImageView.backgroundColor
+        
+        titleLabel.backgroundColor = self.backgroundColor
     }
 
     required init(coder aDecoder: NSCoder) {

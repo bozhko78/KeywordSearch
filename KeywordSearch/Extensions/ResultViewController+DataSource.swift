@@ -82,8 +82,12 @@ extension ResultsTableViewController {
                 let model = CellModel()
                 model.title = title
                 model.urlString = urlString
+                
+                DispatchQueue.main.async {
+
                 if let imageFromCache = imageCache.object(forKey: urlString as AnyObject) {
                     model.img = imageFromCache as? UIImage
+                }
                 }
                 
                 tempDataSource.append(model)

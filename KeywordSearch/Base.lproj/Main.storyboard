@@ -27,9 +27,11 @@
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="QSs-nP-W0e">
                                                     <rect key="frame" x="0.0" y="0.0" width="120" height="80"/>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                 </imageView>
                                                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="u5H-1v-fx7">
                                                     <rect key="frame" x="50" y="30" width="20" height="20"/>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                 </activityIndicatorView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -62,6 +64,7 @@
                                         <constraint firstItem="1pP-1e-7zl" firstAttribute="centerY" secondItem="Fyt-tY-bXw" secondAttribute="centerY" id="ykA-7f-6uA"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
                                 <connections>
                                     <outlet property="activityIndicator" destination="u5H-1v-fx7" id="Tw4-bB-mpR"/>
                                     <outlet property="titleImageView" destination="QSs-nP-W0e" id="YLy-vZ-6Q0"/>

@@ -55,7 +55,7 @@ class ResultsTableViewController: UITableViewController {
     }
     
     // MARK: - Private Functions
-    
+        
     private func setup(cell:ResultCell, with entry:CellModel) {
         if let img = entry.img {
             cell.titleImageView.image = img
